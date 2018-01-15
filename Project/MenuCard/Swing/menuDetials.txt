@@ -1,0 +1,6 @@
+6,Bhel,5
+2,Dosa,30
+1,Idli,25
+5,Pav Bhaji,30
+4,Samosa Pav,15
+3,Vada Pav,15

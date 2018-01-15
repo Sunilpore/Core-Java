@@ -1,0 +1,134 @@
+package MenuCard.Update;
+
+import java.io.*;
+import java.util.*;
+
+public class UpdateMenu
+{
+  
+  String No,upd,upd1,newName,newPrice,upd2;
+  Scanner sc=new Scanner(System.in);
+	  
+  
+ public void update() throws Exception
+  {
+	  
+	  BufferedReader br=new BufferedReader(new FileReader("menuDetials.txt"));
+	  
+	  System.out.println("Update Dish--->");
+	  System.out.println("Enter menu no:");
+	  int no=sc.nextInt();
+	  //No=No+" ";
+	  
+	  //modified
+	  while((upd=br.readLine())!=null)
+	  {
+		 StringTokenizer st=new StringTokenizer(upd,",");
+		
+		 String updcomp[]=upd.split(",");
+		 int nocomp=Integer.parseInt(updcomp[0]);
+		 
+		if(no==nocomp)
+		  System.out.println("\t"+st.nextToken()+"\t"+st.nextToken()+"\t\t"+st.nextToken());		    
+	    else
+			System.out.println("\nInvalid Number");
+	  }
+	  
+	  System.out.println("\nProceed to change...");
+  
+  //extra-------------------------------------
+      
+		  System.out.println("Do you want to Enter New ID Number y/n ?");
+		  
+		  String changeID="",y="y",n="n";
+		  changeID=sc.nextLine();
+		  changeID+=sc.nextLine();
+		  
+		  if(changeID.equalsIgnoreCase(y))
+		  {
+			  int val=1;
+			  do
+			  {
+			   val=1;
+			   System.out.println("Enter menu no:");
+	           int newNo=sc.nextInt();
+			   
+			   while((upd1=br.readLine())!=null)
+			   {
+				StringTokenizer st=new StringTokenizer(upd1,",");
+
+                String updcomp[]=upd1.split(",");	
+                int nocomp=Integer.parseInt(updcomp[0]);
+				
+			   if(newNo==nocomp)
+		        {
+			     System.out.println("\nThis ID Number already exist...!");
+			     System.out.println("Please try another one\n");
+		         val++;
+				}
+			   }
+		    }while(val!=1);
+			
+			upd(); 
+		  }
+		  
+		  
+		  else if(changeID.equalsIgnoreCase(n))
+		  {
+	        upd();
+          }
+   else 
+   {
+	   System.out.println("Invalid input command,try Again...");
+	   
+   }
+        
+  }
+  
+  
+  public void upd()
+  {
+	  try{
+	  
+	  BufferedReader br=new BufferedReader(new FileReader("menuDetials.txt"));
+	  BufferedWriter bw=new BufferedWriter(new FileWriter("temp.txt"));
+	  System.out.print("\nEnter the Dish Name:");
+	  newName=sc.nextLine();
+	  newName+=sc.nextLine();
+		 
+	  System.out.print("Enter the Price:");
+	  newPrice=sc.next();
+		 
+	  BufferedReader br2=new BufferedReader(new FileReader("menuDetials.txt"));
+		  
+	  while((upd2=br2.readLine())!=null)
+		  {
+			  if(upd2.contains(No))
+			  {
+				  //System.out.println("Update..."+No);
+				  bw.write(No+","+newName+","+newPrice);
+			  }
+			  else
+			  {
+				  bw.write(upd2);
+			  }
+			  
+			  bw.flush();
+			  bw.newLine();
+		  }
+	  File org=new File("menuDetials.txt");
+      File temp=new File("temp.txt");
+	  bw.close();
+	  br.close();
+	  br2.close();
+	  org.delete();
+	  temp.renameTo(org);
+	  System.out.println("Update Succesfully...!");
+	  
+	  }catch(Exception e)
+	  {
+		  System.out.println(e);
+	  }	  
+  }
+
+}
